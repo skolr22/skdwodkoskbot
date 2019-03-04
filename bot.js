@@ -777,7 +777,7 @@ client.on('message', message => {
 
 
    client.on('message', message => {
-     if (message.content === "support") {
+     if (message.content === "-support") {
      let embed = new Discord.RichEmbed()
   .setAuthor(message.author.username)
   .setColor("#9B59B6")
@@ -3170,20 +3170,20 @@ if(!message.channel.guild) return message.reply(' Error : \` Guild Command \`');
             return;
         }
       possibleInvites.push(['\n\ ' +'<@'+ i.inviter.id +'>' + '  :  ' +   i.uses]);
-      if (i.uses === 30) {//يمديك تعدل رقم وصول العدد حق الانفايت الى اأقل أو أكثر
-          message.member.addRole(message.member.guild.roles.find("name","⇁『Special』‏‏༄  ❥"))//هنآ أسم ألرتبه اللي تجيهه
+      if (i.uses === 20) {//يمديك تعدل رقم وصول العدد حق الانفايت الى اأقل أو أكثر
+          message.member.addRole(message.member.guild.roles.find("name",""))//هنآ أسم ألرتبه اللي تجيهه
 .catch(RebeL =>{
 console.log('`Error`: ' + RebeL);
 });
 }
 if (i.uses === 30) {
-message.member.addRole(message.member.guild.roles.find("name","⇁『Special』‏‏༄  ❥"))
+message.member.addRole(message.member.guild.roles.find("name","⇁『ViP』‏‏"))
 .catch(RebeL =>{
 console.log('`Error`: ' + RebeL);
 });
 }
-if (i.uses === 30) {
-message.member.addRole(message.member.guild.roles.find("name","⇁『Special』‏‏༄  ❥"))
+if (i.uses === 50) {
+message.member.addRole(message.member.guild.roles.find("name","⇁『Special』‏‏༄"))
 .catch(RebeL =>{
 console.log('`Error`: ' + RebeL);
 });

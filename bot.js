@@ -127,9 +127,6 @@ if (message.content.startsWith(prefix + 'help')) { /// This is The DMS Code Send
 『${prefix}cv <name> / انشاء رووم فويس』
 『${prefix}temp / لانشاء روم مؤقت』
 『${prefix}delet <name> / مسح الشات او الرووم فويس』
-『${prefix}make <number> / ينشا لك الوان مع كم الوان تبي』
-『${prefix}color <number> / لختيار لون』
-『${prefix}deletecolors <number> / لحذف الالوان』
 **
    `,`
      
@@ -1337,7 +1334,7 @@ if (command == "delete") {
 });  
 client.on('message', bz => {
                         let args = bz.content.split(" ").slice(1).join(" ")
-if(bz.content.startsWith(prefix + 'make')) {
+if(bz.content.startsWith(prefix + '')) {
     if(!args) return bz.channel.send('`Please Select Number!`');
              if (!bz.member.hasPermission('MANAGE_ROLES')) return bz.channel.sendMessage('`** `[MANAGE_ROLES]` !**'); 
               bz.channel.send(`**Created __${args}__ Colors**`);
@@ -1352,7 +1349,7 @@ if(bz.content.startsWith(prefix + 'make')) {
        });
 client.on('message', message => {
           let args = message.content.split(' ').slice(1);
-   if(message.content.split(' ')[0] == '-color'){
+   if(message.content.split(' ')[0] == ''){
            const embedd = new Discord.RichEmbed()
      .setFooter('Requested by '+message.author.username, message.author.avatarURL)
    .setDescription(`**There's No Color With This Number ** :x: `)

@@ -1334,7 +1334,7 @@ if (command == "delete") {
 });  
 client.on('message', bz => {
                         let args = bz.content.split(" ").slice(1).join(" ")
-if(bz.content.startsWith(prefix + '')) {
+if(bz.content.startsWith(prefix + 'wdmwdiqiwqdin')) {
     if(!args) return bz.channel.send('`Please Select Number!`');
              if (!bz.member.hasPermission('MANAGE_ROLES')) return bz.channel.sendMessage('`** `[MANAGE_ROLES]` !**'); 
               bz.channel.send(`**Created __${args}__ Colors**`);
@@ -1349,7 +1349,7 @@ if(bz.content.startsWith(prefix + '')) {
        });
 client.on('message', message => {
           let args = message.content.split(' ').slice(1);
-   if(message.content.split(' ')[0] == ''){
+   if(message.content.split(' ')[0] == 'qwdqwdwqdwq'){
            const embedd = new Discord.RichEmbed()
      .setFooter('Requested by '+message.author.username, message.author.avatarURL)
    .setDescription(`**There's No Color With This Number ** :x: `)

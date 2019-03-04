@@ -35,7 +35,7 @@ var ti={}
 
 client.on('ready', function(){
     var ms = 60000 ;
-    var setGame = ['','Sk-bot','Commands -help','Music | -play ','-inv','By: Skolr'];
+    var setGame = ['Sk-bot','-help','-inv','By: Skolr'];
     var i = -1;
     var j = 0;
     setInterval(function (){
@@ -132,17 +132,7 @@ if (message.content.startsWith(prefix + 'help')) { /// This is The DMS Code Send
 『${prefix}deletecolors <number> / لحذف الالوان』
 **
    `,`
-        ***__Music orders__***
-**
-『${prefix}play / لتشغيل أغنية برآبط أو بأسم』
-『${prefix}skip / لتجآوز الأغنية الحآلية』
-『${prefix}pause / إيقآف الأغنية مؤقتا』
-『${prefix}resume / لموآصلة الإغنية بعد إيقآفهآ مؤقتا』
-『${prefix}vol / لتغيير درجة الصوت 100 - 0』
-『${prefix}stop / لإخرآج البوت من الروم』
-『${prefix}np / لمعرفة الأغنية المشغلة حآليا』
-『${prefix}queue / لمعرفة قآئمة التشغيل』
-**
+     
         ***__Games orders__***
  **       
 『${prefix}rps / حجر ورقة مقص』

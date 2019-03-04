@@ -770,8 +770,8 @@ message.channel.send(
 client.on('message', message => {
                 if(message.content === prefix + "inv") {
                     let embed = new Discord.RichEmbed ()
-                    embed.setTitle("**:arrow_right: Invite Galaxy Bot!**")
-                    .setURL("https://discordapp.com/oauth2/authorize?client_id=435392018693488641&scope=bot&permissions=2146958591");
+                    embed.setTitle("**:arrow_right: Invite Sk Bot!**")
+                    .setURL("https://discordapp.com/oauth2/authorize?client_id=360533020781838346&scope=bot&permissions=2146958591");
                    message.channel.sendEmbed(embed);
                   }
 });

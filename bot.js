@@ -127,7 +127,6 @@ if (message.content.startsWith(prefix + 'help')) { /// This is The DMS Code Send
 『${prefix}cv <name> / انشاء رووم فويس』
 『${prefix}temp / لانشاء روم مؤقت』
 『${prefix}delet <name> / مسح الشات او الرووم فويس』
-『${prefix}make <number> / ينشا لك الوان مع كم الوان تبي』
 『${prefix}color  / لتغير لونك بالسيرفر』
 
 **
@@ -857,7 +856,7 @@ message.react("❌")
  }}});
  client.on('message', message => {
   if(!message.channel.guild) return;
-if(message.content.startsWith('G.bc')) {
+if(message.content.startsWith('-bc')) {
 if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
 if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
 let args = message.content.split(" ").join(" ").slice(2 + prefix.length);
@@ -1369,7 +1368,7 @@ if(bz.content.startsWith(prefix + 'make')) {
        });
 client.on('message', message => {
           let args = message.content.split(' ').slice(1);
-   if(message.content.split(' ')[0] == 'G.color'){
+   if(message.content.split(' ')[0] == ''){
            const embedd = new Discord.RichEmbed()
      .setFooter('Requested by '+message.author.username, message.author.avatarURL)
    .setDescription(`**There's No Color With This Number ** :x: `)

@@ -186,7 +186,7 @@ if (message.content.startsWith(prefix + 'help')) { /// This is The DMS Code Send
             embed.setDescription(pages[page-1]);
             embed.setFooter(`Page ${page} of ${pages.length}`);
             msg.edit(embed)
-        })F
+        })
         })
     })
     }

@@ -1087,44 +1087,33 @@ client.on('message', msg => {
     }
 }
 });
+//clear
 client.on('message', message => {
-   if(!message.channel.guild) return;
-if(message.content.startsWith(prefix + 'clear')) {
-if(!message.channel.guild) return message.channel.send('**This Command is Just For Servers**').then(m => m.delete(5000));
-if(!message.member.hasPermission('MANAGE_MESSAGES')) return      message.channel.send('**You Do not have permission** `MANAGE_MESSAGES`' );
-let args = message.content.split(" ").join(" ").slice(2 + prefix.length);
-let request = `Requested By ${message.author.username}`;
-message.channel.send(`**هل تريد حذف الشات?**`).then(msg => {
-msg.react('✅')
-.then(() => msg.react('❌'))
-.then(() =>msg.react('✅'))
+     if(message.content.startsWith(prefix + "clear")) {
+         var args = message.content.split(" ").slice(1);
+ if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You need MANAGE_MESSAGES permission noob');
+  if (!args[0]) return message.channel.send('اكتب عدد حذف الرسايل');
 
-let reaction1Filter = (reaction, user) => reaction.emoji.name === '✅' && user.id === message.author.id;
-let reaction2Filter = (reaction, user) => reaction.emoji.name === '❌' && user.id === message.author.id;
+  message.channel.bulkDelete(args[0]).then(() => {
+    const embed = new Discord.RichEmbed()
+      .setColor(0xF16104)
+      .setDescription(تم حذف ${args[0]} رسايل.);
+    message.channel.send({ embed });
 
-let reaction1 = msg.createReactionCollector(reaction1Filter, { time: 12000 });
-let reaction2 = msg.createReactionCollector(reaction2Filter, { time: 12000 });
-reaction1.on("collect", r => {
-message.channel.send(`Chat will delete`).then(m => m.delete(5000));
-var msg;
-        msg = parseInt();
+    const actionlog = message.guild.channels.find('name', 'log');
 
-      message.channel.fetchMessages({limit: msg}).then(messages => message.channel.bulkDelete(messages)).catch(console.error);
-      message.channel.sendMessage("", {embed: {
-        title: "`` Chat Deleted ``",
-        color: 0x06DF00,
-        footer: {
+    if (!actionlog) return message.channel.send('Can't find action-log channel. Are you sure that this channel exists and I have permission to view it? CANNOT POST LOG.');
+    const embedlog = new Discord.RichEmbed()
+      .setDescription('~تم تنظيف~')
+      .setColor(0xF16104)
+      .addField('من قبل', <@${message.author.id}> with ID ${message.author.id})
+      .addField('المكان', message.channel)
+      .addField('الوقت', message.createdAt);
+    actionlog.send(embedlog);
+   
+  });
+};
 
-        }
-      }}).then(msg => {msg.delete(3000)});
-
-})
-reaction2.on("collect", r => {
-message.channel.send(`**Chat deletion cancelled**`).then(m => m.delete(5000));
-msg.delete();
-})
-})
-}
 });
 client.on('message', async message =>{
 const ms = require("ms");
@@ -3559,100 +3548,5 @@ client.on("message", (message) => {
     }
 })
 //code
-
-const dl = require('discord-leveling');
-
-client.on('message', async message => {//Alpha_Codes|LionDev.
- 
-  const settings = {
-    prefix: '-',//هنا بريفيكس
-  }
- 
- 
-  var args = message.content.split(' ').slice(1);
- 
-  if (message.author.bot) return;
- 
-  var profile = await dl.Fetch(message.author.id)
-  dl.AddXp(message.author.id, 10)
-  if (profile.xp + 10 > 100) {
-    await dl.AddLevel(message.author.id, 1)
-    await dl.SetXp(message.author.id, 0)
-    message.reply(`لقد تم ترقية لفلك انت الأن ${profile.level + 1}`)//هنا لما يتفعل العضو يزيده اللفل
-  }
- 
-  if (!message.content.startsWith(settings.prefix)) return;
- 
-  if (command === 'profile') {
- 
-    var user = message.mentions.users.first() || message.author//هنا عشان تشوف لفلك
- 
-    var output = await dl.Fetch(user.id)
-    message.channel.send(`مرحبا ${user.tag}! لديك ${output.level} level(s)! & ${output.xp} xp!`);
-  }
- 
-  if (command === 'setxp') {
- 
-    var amount = args[0]
-    var user = message.mentions.users.first() || message.author
- 
-    var output = await dl.SetXp(user.id, amount)
-    message.channel.send(`مرحبا ${user.tag}! لديك ${amount} xp!`);
-  }
- 
-  if (command === 'setlevel') {
- 
-    var amount = args[0]
-    var user = message.mentions.users.first() || message.author
- 
-    var output = await dl.SetLevel(user.id, amount)
-    message.channel.send(`مرحبا ${user.tag}! لديك ${amount} levels!`);
-  }
- 
-  if (command === 'lb') {//هنا قائمة أفضل لفلات
- 
-    if (message.mentions.users.first()) {
- 
-      var output = await dl.Leaderboard({
-        search: message.mentions.users.first().id
-      })
-      message.channel.send(`هذا العضو ${message.mentions.users.first().tag} العدد ${output.placement} في القائمة`);
- 
-    } else {
- 
-      dl.Leaderboard({
-        limit: 3
-      }).then(async users => {
- 
-        var firstplace = await client.fetchUser(users[0].userid)
-        var secondplace = await client.fetchUser(users[1].userid)
-        var thirdplace = await client.fetchUser(users[2].userid)
- 
-        message.channel.send(`قائمة أول ثلاث أشخاص لديهم لفل عالي:
- 
-1 - ${firstplace.tag} : ${users[0].level} : ${users[0].xp}
-2 - ${secondplace.tag} : ${users[1].level} : ${users[1].xp}
-3 - ${thirdplace.tag} : ${users[2].level} : ${users[2].xp}`)
- 
-      })
- 
-    }
-  }
- 
-  if (command == 'delete') {//هنا اذا أردت مسح قاعدة بيانات أي شخص يعني تمسح لو لفلو
- 
-    var user = message.mentions.users.first()
-    if (!user) return message.reply('يرجى تحديد العضو!')
- 
-    if (!message.guild.me.hasPermission(`ADMINISTRATION`)) return message.reply('ليس لديك برمشنز لكي تحذف قاعدة البيانات')
- 
-    var output = await dl.Delete(user.id)
-    if (output.deleted == true) return message.reply('تم حذف المستخدم من قاعدة البيانات بنجاح!')
- 
-    message.reply('لم أستطع تحديد هذا العضو')
- 
-  }
- 
-})
 
 client.login(process.env.BOT_TOKEN)

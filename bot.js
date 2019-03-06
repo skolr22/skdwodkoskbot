@@ -1088,33 +1088,20 @@ client.on('message', msg => {
 }
 });
 //clear
-client.on('message', message => {
-     if(message.content.startsWith(prefix + "clear")) {
-         var args = message.content.split(" ").slice(1);
- if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You need MANAGE_MESSAGES permission noob');
-  if (!args[0]) return message.channel.send('اكتب عدد حذف الرسايل');
-
-  message.channel.bulkDelete(args[0]).then(() => {
-    const embed = new Discord.RichEmbed()
-      .setColor(0xF16104)
-      .setDescription(Cleared ${args[0]} messages.);
-    message.channel.send({ embed });
-
-    const actionlog = message.guild.channels.find('name', 'log');
-
-    if (!actionlog) return message.channel.send('Can't find action-log channel. Are you sure that this channel exists and I have permission to view it? CANNOT POST LOG.');
-    const embedlog = new Discord.RichEmbed()
-      .setDescription('~تم تنظيف~')
-      .setColor(0xF16104)
-      .addField('من قبل', <@${message.author.id}> with ID ${message.author.id})
-      .addField('المكان', message.channel)
-      .addField('الوقت', message.createdAt);
-    actionlog.send(embedlog);
-   
-  });
-};
-
-});
+client.on('message', message => {  
+    if (message.author.bot) return;
+if (message.content.startsWith(prefix + 'clear')) { //Codes
+    if(!message.channel.guild) return message.reply('⛔ | This Command For Servers Only!'); 
+        if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send('⛔ | You dont have **MANAGE_MESSAGES** Permission!');
+        if(!message.guild.member(client.user).hasPermission('MANAGE_MESSAGES')) return message.channel.send('⛔ | I dont have **MANAGE_MESSAGES** Permission!');
+ let args = message.content.split(" ").slice(1)
+    let messagecount = parseInt(args);
+    if (args > 99) return message.reply("**🛑 || يجب ان يكون عدد المسح أقل من 300 .**").then(messages => messages.delete(5000))
+    if(!messagecount) args = '300';
+    message.channel.fetchMessages({limit: messagecount + 1}).then(messages => message.channel.bulkDelete(messages));
+    message.channel.send(`\`${args}\` : __عدد الرسائل التي تم مسحها __ `).then(messages => messages.delete(5000));
+  }
+  }); //Julian
 client.on('message', async message =>{
 const ms = require("ms");
 if (message.author.omar) return;
@@ -3547,5 +3534,43 @@ client.on("message", (message) => {
         message.channel.send(`** <@${message.mentions.members.first().id}> Unmuted!😀**`);
     }
 })
+//color
+client.on('message', message => {
+            let args = message.content.split(' ').slice(1);
+            if(message.content.split(' ')[0] == `${prefix}color`){
+            const embedd = new Discord.RichEmbed()
+            .setFooter('Requested by '+message.author.username, message.author.avatarURL)
+            .setDescription(`**لا يوجد لون بهذا الأسم ** ❌ `)
+            .setColor(`ff0000`)
+           
+            if(!isNaN(args) && args.length > 0)
+           
+           
+            if    (!(message.guild.roles.find("name",`${args}`))) return  message.channel.sendEmbed(embedd);
+           
+           
+            var a = message.guild.roles.find("name",`${args}`)
+             if(!a)return;
+            const embed = new Discord.RichEmbed()
+           
+            .setFooter('Requested by '+message.author.username, message.author.avatarURL)
+            .setDescription(`**Done , تم تغير لونك . ✅ **`)
+           
+            .setColor(`${a.hexColor}`)
+            message.channel.sendEmbed(embed);
+            if (!args)return;
+            setInterval(function(){})
+               let count = 0;
+               let ecount = 0;
+            for(let x = 1; x < 201; x++){
+           
+            message.member.removeRole(message.guild.roles.find("name",`${x}`))
+           
+            }
+             message.member.addRole(message.guild.roles.find("name",`${args}`));
+           
+           
+            }
+            });
 
 client.login(process.env.BOT_TOKEN)

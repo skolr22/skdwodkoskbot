@@ -3888,7 +3888,7 @@ if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#
 		
 		
 		
-          movies.send(`@everyone | @here
+          movies.send(`@everyone 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 **Snow Codes© ⬇**
 \`\`\`css

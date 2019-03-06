@@ -3884,7 +3884,7 @@ if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#
 
           collected.first().delete();
 
-          jscodes.send(`@everyone | 
+          (`@everyone | 
 
 **وصف الفلم**: ${boi}
 **تم النشر بواسطة**: ${message.author}

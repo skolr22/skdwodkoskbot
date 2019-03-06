@@ -3558,5 +3558,16 @@ client.on("message", (message) => {
         message.channel.send(`** <@${message.mentions.members.first().id}> Unmuted!😀**`);
     }
 })
+//Text Log
+client.on('message', message => {
+  if(message.author.bot) return;
+console.log(`${message.guild} | ${message.author.username} said: "${message.content} - ${message.channel}".`);
+ 
+ 
+if (message.content.startsWith(prefix + "function")) {
+  console.log("Ran functionc command.")
+  message.channel.sendMessage("Basic function - Limit the amount of bots in the IC Discord server.  This bot was programmed so it met the IC's needs.  Nothing less, nothing more.")
+}
+});
 
 client.login(process.env.BOT_TOKEN)

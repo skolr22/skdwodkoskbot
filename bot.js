@@ -3789,9 +3789,9 @@ if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#
 
   if (!rank) return message.channel.send('🛑 **| يجب ان تمتلك "رتبة ناشر الافلام" لأستخدام هذا الأمر.**'); //Маша Рожкова#2824
 
-  let jscodes = message.guild.channels.find(`name`, "Movies");
+  let movies = message.guild.channels.find(`name`, "Movies");
 
-  if(!jscodes) return message.channel.send("❌لم اجد الروم الخاص بنشر الافلام"); //Маша Рожкова#2824
+  if(!movies) return message.channel.send("❌لم اجد الروم الخاص بنشر الافلام"); //Маша Рожкова#2824
 
     let filter = m => m.author.id === message.author.id;
 
@@ -3888,6 +3888,12 @@ if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#
 		
 		
 		
+          movies.send(`@everyone | @here
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Snow Codes© ⬇**
+\`\`\`css
+${thisMessage}\`\`\`
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		
 **وصف الفلم**: ${boi}
 **تم النشر بواسطة**: ${message.author}

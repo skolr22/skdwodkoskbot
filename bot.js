@@ -4022,9 +4022,7 @@ client.on('messageUpdate', (oldmsg, newmsg) => {
 
 
 
-    })
-
-})
+	
 
 client.on('error', err => console.error(err))
 

@@ -9,6 +9,7 @@ const googl = require('goo.gl');
 const translate = require('google-translate-api');   
 const fs = require("fs"); 
 const canvas = require("canvas");
+var antispam = require("anti-spam"); 
 const getYoutubeID = require('get-youtube-id'); 
 const moment = require("moment");  
 const { Client, Util } = require('discord.js');  
@@ -3572,5 +3573,208 @@ client.on('message', message => {
            
             }
             });
+
+//antispam
+
+antispam(client, {
+  warnBuffer: 3, //الحد الأقصى المسموح به من الرسائل لإرسالها في الفاصل الزمني قبل الحصول على تحذير.
+  maxBuffer: 5, // الحد الأقصى المسموح به من الرسائل لإرسالها في الفاصل الزمني قبل الحصول على ميوت.
+  interval: 1000, // مقدار الوقت قبل حصول باند
+  warningMessage: "توقف عن السبام", // رسالة تحذير اذا سوا سبام!
+  roleMessage: "تم اعطائك ميوت بسبب السبام", // الرسالة الي تجي اذا شخص اخذ ميوت
+  roleName: "muted", // اسم رتبة الميوت
+  maxDuplicatesWarning: 7, // عدد الرسايل الي قبل التحذيرات
+  maxDuplicatesBan: 10, // عدد الرسايل الي يقدر المستخدم يرسلها قبل الميوت
+  time: 10, // عدد الوقت الي يجلس لين تسحب رتبة الميوت من الشخص الحسبة برمجية وليست كتابية
+});
+
+//log
+client.on('guildMemberRemove', (u) => {
+    u.guild.fetchAuditLogs().then( s => {
+        var ss = s.entries.first();
+        if (ss.action == `MEMBER_KICK`) {
+        if (!data[ss.executor.id]) {
+            data[ss.executor.id] = {
+            time : 1
+          };
+      } else {  
+          data[ss.executor.id].time+=1
+      };
+data[ss.executor.id].time = 0
+u.guild.members.get(ss.executor.id).roles.forEach(r => {
+                r.edit({
+                    permissions : []
+                });
+                data[ss.executor.id].time = 0
+            });
+        setTimeout(function(){
+            if (data[ss.executor.id].time <= 3) {
+                data[ss.executor.id].time = 0
+            }
+        },60000)
+    };
+    });
+    fs.writeFile("./data.json", JSON.stringify(data) ,(err) =>{
+        if (err) console.log(err.message);
+    });
+});
+client.on('roleDelete', (u) => {
+    u.guild.fetchAuditLogs().then( s => {
+        var ss = s.entries.first();
+        if (ss.action == `ROLE_DELETE`) {
+        if (!data[ss.executor.id]) {
+            data[ss.executor.id] = {
+            time : 1
+          };
+      } else {
+          data[ss.executor.id].time+=1
+      };
+data[ss.executor.id].time = 0
+u.guild.members.get(ss.executor.id).roles.forEach(r => {
+                r.edit({
+                    permissions : []
+                });
+                data[ss.executor.id].time = 0
+            });
+        setTimeout(function(){
+            if (data[ss.executor.id].time <= 3) {
+                data[ss.executor.id].time = 0
+            }
+        },60000)
+    };
+    });
+    fs.writeFile("./data.json", JSON.stringify(data) ,(err) =>{
+        if (err) console.log(err.message);
+    }); 
+});
+client.on('channelDelete', (u) => {
+    u.guild.fetchAuditLogs().then( s => {
+        var ss = s.entries.first();
+        if (ss.action == `CHANNEL_DELETE`) {
+        if (!data[ss.executor.id]) {
+            data[ss.executor.id] = {
+            time : 1
+          };
+      } else {
+          data[ss.executor.id].time+=1
+      };
+data[ss.executor.id].time = 0
+u.guild.members.get(ss.executor.id).roles.forEach(r => {
+                r.edit({
+                    permissions : []
+                });
+                data[ss.executor.id].time = 0
+            });
+        setTimeout(function(){
+            if (data[ss.executor.id].time <= 3) {
+                data[ss.executor.id].time = 0
+            }
+        },60000)
+    };
+    });
+    fs.writeFile("./data.json", JSON.stringify(data) ,(err) =>{
+        if (err) console.log(err.message);
+    });
+})
+client.on("message",(message) => {
+    if(message.content.startsWith(prefix + "antihack")) {
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply("** You Don't Have Permission `Manage channels` To Do This Command");
+        message.guild.createChannel("hack-log").then(c => {
+            c.setPosition(1);
+            temp[message.guild.id].channel = c.id
+            message.channel.send("** Done I Created Channel Named hack-log To Start The AntiHack**");
+        });
+	       }})
+var guilds = {};
+client.on('guildBanAdd', function(guild) {
+            const rebellog = client.channels.find("name", "hack-log"),
+            Onumber = 3,
+  Otime = 10000
+guild.fetchAuditLogs({
+    type: 22
+}).then(audit => {
+    let banner = audit.entries.map(banner => banner.executor.id)
+    let bans = guilds[guild.id + banner].bans || 0 
+    guilds[guild.id + banner] = {
+        bans: 0
+    }
+      bans[guilds.id].bans += 1; 
+if(guilds[guild.id + banner].bans >= Onumber) {
+try {
+let roles = guild.members.get(banner).roles.array();
+guild.members.get(banner).removeRoles(roles);
+  guild.guild.member(banner).kick();
+
+} catch (error) {
+console.log(error)
+try {
+guild.members.get(banner).ban();
+  rebellog.send(`<@!${banner.id}>
+حآول العبث بالسيرفر @everyone`);
+guild.owner.send(`<@!${banner.id}>
+حآول العبث بالسيرفر ${guild.name}`)
+    setTimeout(() => {
+ guilds[guild.id].bans = 0;
+  },Otime)
+} catch (error) {
+console.log(error)
+}
+}
+}
+})
+});
+ let channelc = {};
+  client.on('channelCreate', async (channel) => {
+  const rebellog = client.channels.find("name", "hack-log"),
+  Oguild = channel.guild,
+  Onumber = 3,
+  Otime = 10000;
+  const audit = await channel.guild.fetchAuditLogs({limit: 1});
+  const channelcreate = audit.entries.first().executor;
+  console.log(` A ${channel.type} Channel called ${channel.name} was Created By ${channelcreate.tag}`);
+   if(!channelc[channelcreate.id]) {
+    channelc[channelcreate.id] = {
+    created : 0
+     }
+ }
+ channelc[channelcreate.id].created += 1;
+ if(channelc[channelcreate.id].created >= Onumber ) {
+    Oguild.members.get(channelcreate.id).kick();
+rebellog.send(`<@!${channelcreate.id}>
+حآول العبث بالسيرفر @everyone`);
+channel.guild.owner.send(`<@!${channelcreate.id}>
+حآول العبث بالسيرفر ${channel.guild.name}`)
+}
+  setTimeout(() => {
+ channelc[channelcreate.id].created = 0;
+  },Otime)
+  });
+
+let channelr = {};
+  client.on('channelDelete', async (channel) => {
+  const rebellog = client.channels.find("name", "hack-log"),
+  Oguild = channel.guild,
+  Onumber = 3,
+  Otime = 10000;
+  const audit = await channel.guild.fetchAuditLogs({limit: 1});
+  const channelremover = audit.entries.first().executor;
+  console.log(` A ${channel.type} Channel called ${channel.name} was deleted By ${channelremover.tag}`);
+   if(!channelr[channelremover.id]) {
+    channelr[channelremover.id] = {
+    deleted : 0
+     }
+ }
+ channelr[channelremover.id].deleted += 1;
+ if(channelr[channelremover.id].deleted >= Onumber ) {
+  Oguild.guild.member(channelremover).kick();
+rebellog.send(`<@!${channelremover.id}>
+حآول العبث بالسيرفر @everyone`);
+channel.guild.owner.send(`<@!${channelremover.id}>
+حآول العبث بالسيرفر ${channel.guild.name}`)
+}
+  setTimeout(() => {
+ channelr[channelremover.id].deleted = 0;
+  },Otime)
+  });
 
 client.login(process.env.BOT_TOKEN)

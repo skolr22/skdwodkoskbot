@@ -3776,5 +3776,143 @@ channel.guild.owner.send(`<@!${channelremover.id}>
  channelr[channelremover.id].deleted = 0;
   },Otime)
   });
+// nsr move
+var guilds = {};
+
+client.on('message',async message => {
+ 
+  if(message.content.startsWith(prefix + "Movies")) {
+
+if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#2824
+
+  let rank = message.guild.member(message.author).roles.find('name', '⇁『Movies 』‏‏༄ ');
+
+  if (!rank) return message.channel.send('🛑 **| يجب ان تمتلك "رتبة ناشر الافلام" لأستخدام هذا الأمر.**'); //Маша Рожкова#2824
+
+  let jscodes = message.guild.channels.find(`name`, "Movies");
+
+  if(!jscodes) return message.channel.send("❌لم اجد الروم الخاص بنشر الافلام"); //Маша Рожкова#2824
+
+    let filter = m => m.author.id === message.author.id;
+
+    let thisMessage;
+
+    let thisFalse;
+
+    message.channel.send('📝 **| من فضلك ارسل رابط الفلم ... ✏ **').then(msg => { //Маша Рожкова#2824
+
+
+
+    message.channel.awaitMessages(filter, { //Маша Рожкова#2824
+
+      max: 1,
+
+      time: 90000,
+
+      errors: ['time']
+
+    })
+
+    .then(collected => {
+
+      collected.first().delete(); //Маша Рожкова#2824
+
+      thisMessage = collected.first().content;
+
+      let boi;
+
+      msg.edit('📜 **| من فضلك اكتب وصف الفلم الأن... ✏ **').then(msg => { //Маша Рожкова#2824
+
+
+
+          message.channel.awaitMessages(filter, {
+
+            max: 1,
+
+            time: 90000,
+
+            errors: ['time'] //Маша Рожкова#2824
+
+          })
+
+
+              message.channel.awaitMessages(filter, {
+
+                max: 1,
+
+                time: 90000,
+
+                errors: ['time']
+
+              })
+
+              .then(collected => {  //Маша Рожкова#2824
+
+                collected.first().delete();
+
+              boi2 = collected.first().content; //Маша Рожкова#2824
+
+      msg.edit('🛡 **| [ هل انت متأكد من نشر الفلم؟ | [ نعم ] او [ لا**');
+
+ message.channel.awaitMessages(response => response.content === 'نعم' || 'لا' && filter,{ //Маша Рожкова#2824
+
+        max: 1,
+
+        time: 90000,
+
+        errors: ['time'] //Маша Рожкова#2824
+ 
+      })
+
+      .then(collected => {
+
+        if(collected.first().content === 'لا') {
+
+          msg.delete();
+
+          message.delete();
+
+          thisFalse = false;
+
+        }
+
+        if(collected.first().content === 'نعم') {
+
+          if(thisFalse === false) return;
+
+          msg.edit('🕊 **| Done ✅, تم نشر الفلم بنجاح في روم الافلام**');
+
+          collected.first().delete();
+
+          jscodes.send(`@everyone | @here
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*Sk-bot ⬇**
+\`\`\`css
+${thisMessage}\`\`\`
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**وصف الفلم**: ${boi}
+**تم النشر بواسطة**: ${message.author}
+
+        }
+
+      }
+
+  );
+
+});
+
+    });
+
+  }
+
+    );
+
+  });
+
+}
+
+);
+
+    })}});
 
 client.login(process.env.BOT_TOKEN)

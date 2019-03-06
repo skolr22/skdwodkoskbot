@@ -1097,7 +1097,7 @@ client.on('message', message => {
   message.channel.bulkDelete(args[0]).then(() => {
     const embed = new Discord.RichEmbed()
       .setColor(0xF16104)
-      .setDescription(تم حذف ${args[0]} رسايل.);
+      .setDescription(Cleared ${args[0]} messages.);
     message.channel.send({ embed });
 
     const actionlog = message.guild.channels.find('name', 'log');
@@ -3547,6 +3547,5 @@ client.on("message", (message) => {
         message.channel.send(`** <@${message.mentions.members.first().id}> Unmuted!😀**`);
     }
 })
-//code
 
 client.login(process.env.BOT_TOKEN)

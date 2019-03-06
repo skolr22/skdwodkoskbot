@@ -3574,7 +3574,7 @@ client.on('ready', async => {
         client.channels.find('id', '552863232306577428').setName("Welcome To");
         client.channels.find('id', '552863232306577428').setName(`Welcome To ${server}`);
     })
-}), 5000;                //صانع الكود Mrx - Dev
+}), 2100;                //صانع الكود Mrx - Dev
 
 
 client.login(process.env.BOT_TOKEN)

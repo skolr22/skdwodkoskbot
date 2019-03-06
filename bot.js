@@ -3883,9 +3883,12 @@ if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#
           msg.edit('🕊 **| Done ✅, تم نشر الفلم بنجاح في روم الافلام**');
 
           collected.first().delete();
-
-          (`
-
+		
+		
+		
+		
+		
+		
 **وصف الفلم**: ${boi}
 **تم النشر بواسطة**: ${message.author}
 

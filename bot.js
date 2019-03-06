@@ -4012,7 +4012,7 @@ client.on('messageDelete', (msg) => {
 
 })
 
-Client.on('messageUpdate', (oldmsg, newmsg) => {
+client.on('messageUpdate', (oldmsg, newmsg) => {
 
   if(oldmsg.content == newmsg.content) return;
 

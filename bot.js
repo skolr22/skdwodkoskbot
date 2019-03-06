@@ -19,7 +19,6 @@ const stripIndents = require('common-tags').stripIndents;
 const figlet = require('figlet');
 const google = require('google-it'); 
 const queue = new Map(); 
-const dl = require('discord-leveling');
 const zalgo = require('zalgolize');   
 const fetchVideoInfo = require('youtube-info');
 const YouTube = require('simple-youtube-api');
@@ -3561,6 +3560,7 @@ client.on("message", (message) => {
 })
 //code
 
+const dl = require('discord-leveling');
 
 client.on('message', async message => {//Alpha_Codes|LionDev.
  

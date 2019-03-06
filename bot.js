@@ -3558,6 +3558,23 @@ client.on("message", (message) => {
         message.channel.send(`** <@${message.mentions.members.first().id}> Unmuted!😀**`);
     }
 })
+//welcome V
+var server = 'Sk-bot';
+// ملاحظه الكود اول مايشتغل البوت راح يشتغل
+client.on('ready', async => {
+    setInterval(() => {
+        client.channels.find('id', '552863232306577428').setName("W");
+        client.channels.find('id', '552863232306577428').setName("We");
+        client.channels.find('id', '552863232306577428').setName("Wel");
+        client.channels.find('id', '552863232306577428').setName("Welc");
+        client.channels.find('id', '552863232306577428').setName("Welco");
+        client.channels.find('id', '552863232306577428').setName("Welcom");
+        client.channels.find('id', '552863232306577428').setName("Welcome");
+        client.channels.find('id', '552863232306577428').setName("Welcome T");
+        client.channels.find('id', '552863232306577428').setName("Welcome To");
+        client.channels.find('id', '552863232306577428').setName(`Welcome To ${server}`);
+    })
+}), 5000;                //صانع الكود Mrx - Dev
 
 
 client.login(process.env.BOT_TOKEN)

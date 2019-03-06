@@ -3884,11 +3884,12 @@ if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#
 
           collected.first().delete();
 
-          client.send(`@everyone`)
-=====================================		
+          jscodes.send(`@everyone | 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Moveis ⬇**
 \`\`\`css
 ${thisMessage}\`\`\`
-====================================
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 **وصف الفلم**: ${boi}
 **تم النشر بواسطة**: ${message.author}
 

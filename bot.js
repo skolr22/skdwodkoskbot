@@ -3884,7 +3884,7 @@ if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#
 
           collected.first().delete();
 
-          client.send(`@everyone | @here
+          client.send(`@everyone | @here`)
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 *Sk-bot ⬇**
 \`\`\`css

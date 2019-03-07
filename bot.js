@@ -20,6 +20,8 @@ const stripIndents = require('common-tags').stripIndents;
 const figlet = require('figlet');
 const google = require('google-it'); 
 const queue = new Map(); 
+const argstop = message.content.trim().split(/ +/g);
+const command = argstop.shift().toLowerCase();
 const zalgo = require('zalgolize');   
 const fetchVideoInfo = require('youtube-info');
 const YouTube = require('simple-youtube-api');
@@ -3778,8 +3780,6 @@ channel.guild.owner.send(`<@!${channelremover.id}>
   });
 // Top Voice
 
- const argstop = message.content.trim().split(/ +/g);
-  const command = argstop.shift().toLowerCase();
   if (command === `${prefix}topvoice`) {
     let top = {
       users: [],

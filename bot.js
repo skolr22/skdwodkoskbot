@@ -3776,150 +3776,231 @@ channel.guild.owner.send(`<@!${channelremover.id}>
  channelr[channelremover.id].deleted = 0;
   },Otime)
   });
-// nsr move
-var guilds = {};
+// Top Voice
 
-client.on('message',async message => {
+ const argstop = message.content.trim().split(/ +/g);
+  const command = argstop.shift().toLowerCase();
+  if (command === `${prefix}topvoice`) {
+    let top = {
+      users: [],
+      points: [],
+      level: [],
+    };
+    con.query(`Select * from globalUserData order by voiceCredits DESC;`, async (err, rows) => {
+      if(err) throw err;
+      rows.forEach(element => {
+        top.users.push(element.id);
+        top.points.push(element.voiceCredits);
+        top.level.push(element.voiceLevel);
+      });
  
-  if(message.content.startsWith(prefix + "Movies")) {
-
-if(!message.channel.guild) return message.reply(' '); //Маша Рожкова#2824
-
-  let rank = message.guild.member(message.author).roles.find('name', '⇁『Movies 』‏‏༄ ');
-
-  if (!rank) return message.channel.send('🛑 **| يجب ان تمتلك "رتبة ناشر الافلام" لأستخدام هذا الأمر.**'); //Маша Рожкова#2824
-
-  let movies = message.guild.channels.find(`name`, "Movies");
-
-  if(!movies) return message.channel.send("❌لم اجد الروم الخاص بنشر الافلام"); //Маша Рожкова#2824
-
-    let filter = m => m.author.id === message.author.id;
-
-    let thisMessage;
-
-    let thisFalse;
-
-    message.channel.send('📝 **| من فضلك ارسل رابط الفلم ... ✏ **').then(msg => { //Маша Рожкова#2824
-
-
-
-    message.channel.awaitMessages(filter, { //Маша Рожкова#2824
-
-      max: 1,
-
-      time: 90000,
-
-      errors: ['time']
-
-    })
-
-    .then(collected => {
-
-      collected.first().delete(); //Маша Рожкова#2824
-
-      thisMessage = collected.first().content;
-
-      let boi;
-
-      msg.edit('📜 **| من فضلك اكتب وصف الفلم الأن... ✏ **').then(msg => { //Маша Рожкова#2824
-
-
-
-          message.channel.awaitMessages(filter, {
-
-            max: 1,
-
-            time: 90000,
-
-            errors: ['time'] //Маша Рожкова#2824
-
-          })
-
-
-              message.channel.awaitMessages(filter, {
-
-                max: 1,
-
-                time: 90000,
-
-                errors: ['time']
-
-              })
-
-              .then(collected => {  //Маша Рожкова#2824
-
-                collected.first().delete();
-
-              boi2 = collected.first().content; //Маша Рожкова#2824
-
-      msg.edit('🛡 **| [ هل انت متأكد من نشر الفلم؟ | [ نعم ] او [ لا**');
-
- message.channel.awaitMessages(response => response.content === 'نعم' || 'لا' && filter,{ //Маша Рожкова#2824
-
-        max: 1,
-
-        time: 90000,
-
-        errors: ['time'] //Маша Рожкова#2824
+      function clearUsers(input) {
+        let users = "";
+        input.split("\n").forEach(element => {
+          if (element === "<@!undefined>") return;
+          else {
+            users += `${element}\n`;
+          };
+        });
+        return users;
+      };
  
-      })
-
-      .then(collected => {
-
-        if(collected.first().content === 'لا') {
-
-          msg.delete();
-
-          message.delete();
-
-          thisFalse = false;
-
-        }
-
-        if(collected.first().content === 'نعم') {
-
-          if(thisFalse === false) return;
-
-          msg.edit('🕊 **| Done ✅, تم نشر الفلم بنجاح في روم الافلام**');
-
-          collected.first().delete();
-		
-		
-		
-		
-		
-          movies.send(`@everyone 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-**Snow Codes© ⬇**
-\`\`\`css
-${thisMessage}\`\`\`
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-		
-**وصف الفلم**: ${boi}
-**تم النشر بواسطة**: ${message.author}
-
-        }
-
-      }
-
-  );
-
-});
-
+      function clearTotal(input) {
+        let total = "";
+        input.split("\n").forEach(element => {
+          if (element === "undefined") return;
+          else {
+            total += `${element}\n`;
+          };
+        });
+        return total;
+      };
+ 
+      function clearLevel(input) {
+        let level = "";
+        input.split("\n").forEach(element => {
+          if (element === "undefined") return;
+          else {
+            level += `${element}\n`;
+          };
+        });
+        return level;
+      };
+      let number = parseInt(argstop[0], 10);
+      let page = number - 1 || 0;
+      let pages = parseInt(`${top.users.length}`.slice(0, -1), 10);
+      if (page > pages) page = 0;
+      let users = clearUsers(`<@!${top.users[parseInt(`${page}0`,10)]}>\n<@!${top.users[parseInt(`${page}1`,10)]}>\n<@!${top.users[parseInt(`${page}2`,10)]}>\n<@!${top.users[parseInt(`${page}3`,10)]}>\n<@!${top.users[parseInt(`${page}4`,10)]}>\n<@!${top.users[parseInt(`${page}5`,10)]}>\n<@!${top.users[parseInt(`${page}6`,10)]}>\n<@!${top.users[parseInt(`${page}7`,10)]}>\n<@!${top.users[parseInt(`${page}8`,10)]}>\n<@!${top.users[parseInt(`${page}9`,10)]}>`);
+      let total = clearTotal(`${top.points[parseInt(`${page}0`,10)]}\n${top.points[parseInt(`${page}1`,10)]}\n${top.points[parseInt(`${page}2`,10)]}\n${top.points[parseInt(`${page}3`,10)]}\n${top.points[parseInt(`${page}4`,10)]}\n${top.points[parseInt(`${page}5`,10)]}\n${top.points[parseInt(`${page}6`,10)]}\n${top.points[parseInt(`${page}7`,10)]}\n${top.points[parseInt(`${page}8`,10)]}\n${top.points[parseInt(`${page}9`,10)]}`);
+      let level = clearLevel(`${top.level[parseInt(`${page}0`,10)]}\n${top.level[parseInt(`${page}1`,10)]}\n${top.level[parseInt(`${page}2`,10)]}\n${top.level[parseInt(`${page}3`,10)]}\n${top.level[parseInt(`${page}4`,10)]}\n${top.level[parseInt(`${page}5`,10)]}\n${top.level[parseInt(`${page}6`,10)]}\n${top.level[parseInt(`${page}7`,10)]}\n${top.level[parseInt(`${page}8`,10)]}\n${top.level[parseInt(`${page}9`,10)]}`);
+      const topembed = new Discord.RichEmbed()
+        .setAuthor(`Top Voice`)
+        .addField(`الشخص`, users, true)
+        .addField(`النقاط`, total, true)
+        .addField(`المستوى`, level, true)
+        .setColor('RANDOM')
+        .setFooter(`Page ${page+1} of ${pages+1}`)
+        .setTimestamp()
+      message.channel.send(topembed).then(async topmessage => {
+        topmessage.react(`◀`).then(() => {
+          topmessage.react(`▶`).then(() => {
+            const backwardsFilter = (reaction, user) => reaction.emoji.name === '◀' && user.id === message.author.id;
+            const forwardsFilter = (reaction, user) => reaction.emoji.name === '▶' && user.id === message.author.id;
+            const backwards = topmessage.createReactionCollector(backwardsFilter, {
+              time: 120000
+            });
+            const forwards = topmessage.createReactionCollector(forwardsFilter, {
+              time: 120000
+            });
+            backwards.on("collect", r => {
+              r.remove(message.author);
+              if (page <= 0) return;
+              page--;
+              let users = clearUsers(`<@!${top.users[parseInt(`${page}0`,10)]}>\n<@!${top.users[parseInt(`${page}1`,10)]}>\n<@!${top.users[parseInt(`${page}2`,10)]}>\n<@!${top.users[parseInt(`${page}3`,10)]}>\n<@!${top.users[parseInt(`${page}4`,10)]}>\n<@!${top.users[parseInt(`${page}5`,10)]}>\n<@!${top.users[parseInt(`${page}6`,10)]}>\n<@!${top.users[parseInt(`${page}7`,10)]}>\n<@!${top.users[parseInt(`${page}8`,10)]}>\n<@!${top.users[parseInt(`${page}9`,10)]}>`);
+              let total = clearTotal(`${top.points[parseInt(`${page}0`,10)]}\n${top.points[parseInt(`${page}1`,10)]}\n${top.points[parseInt(`${page}2`,10)]}\n${top.points[parseInt(`${page}3`,10)]}\n${top.points[parseInt(`${page}4`,10)]}\n${top.points[parseInt(`${page}5`,10)]}\n${top.points[parseInt(`${page}6`,10)]}\n${top.points[parseInt(`${page}7`,10)]}\n${top.points[parseInt(`${page}8`,10)]}\n${top.points[parseInt(`${page}9`,10)]}`);
+              let level = clearLevel(`${top.level[parseInt(`${page}0`,10)]}\n${top.level[parseInt(`${page}1`,10)]}\n${top.level[parseInt(`${page}2`,10)]}\n${top.level[parseInt(`${page}3`,10)]}\n${top.level[parseInt(`${page}4`,10)]}\n${top.level[parseInt(`${page}5`,10)]}\n${top.level[parseInt(`${page}6`,10)]}\n${top.level[parseInt(`${page}7`,10)]}\n${top.level[parseInt(`${page}8`,10)]}\n${top.level[parseInt(`${page}9`,10)]}`);
+              let newembed = new Discord.RichEmbed()
+                .setAuthor(`Top Voice`)
+                .addField(`الشخص`, users, true)
+                .addField(`النقاط`, total, true)
+                .addField(`المستوى`, level, true)
+                .setColor("RANDOM")
+                .setFooter(`Page ${page+1} of ${pages+1}`)
+                .setTimestamp()
+              topmessage.edit(newembed);
+            })
+            forwards.on("collect", r => {
+              r.remove(message.author);
+              if (page === pages) return;
+              page++;
+              let users = clearUsers(`<@!${top.users[parseInt(`${page}0`,10)]}>\n<@!${top.users[parseInt(`${page}1`,10)]}>\n<@!${top.users[parseInt(`${page}2`,10)]}>\n<@!${top.users[parseInt(`${page}3`,10)]}>\n<@!${top.users[parseInt(`${page}4`,10)]}>\n<@!${top.users[parseInt(`${page}5`,10)]}>\n<@!${top.users[parseInt(`${page}6`,10)]}>\n<@!${top.users[parseInt(`${page}7`,10)]}>\n<@!${top.users[parseInt(`${page}8`,10)]}>\n<@!${top.users[parseInt(`${page}9`,10)]}>`);
+              let total = clearTotal(`${top.points[parseInt(`${page}0`,10)]}\n${top.points[parseInt(`${page}1`,10)]}\n${top.points[parseInt(`${page}2`,10)]}\n${top.points[parseInt(`${page}3`,10)]}\n${top.points[parseInt(`${page}4`,10)]}\n${top.points[parseInt(`${page}5`,10)]}\n${top.points[parseInt(`${page}6`,10)]}\n${top.points[parseInt(`${page}7`,10)]}\n${top.points[parseInt(`${page}8`,10)]}\n${top.points[parseInt(`${page}9`,10)]}`);
+              let level = clearLevel(`${top.level[parseInt(`${page}0`,10)]}\n${top.level[parseInt(`${page}1`,10)]}\n${top.level[parseInt(`${page}2`,10)]}\n${top.level[parseInt(`${page}3`,10)]}\n${top.level[parseInt(`${page}4`,10)]}\n${top.level[parseInt(`${page}5`,10)]}\n${top.level[parseInt(`${page}6`,10)]}\n${top.level[parseInt(`${page}7`,10)]}\n${top.level[parseInt(`${page}8`,10)]}\n${top.level[parseInt(`${page}9`,10)]}`);
+              let newembed = new Discord.RichEmbed()
+                .setAuthor(`Top Voice`)
+                .addField(`الشخص`, users, true)
+                .addField(`النقاط`, total, true)
+                .addField(`المستوى`, level, true)
+                .setColor("RANDOM")
+                .setFooter(`Page ${page+1} of ${pages+1}`)
+                .setTimestamp()
+              topmessage.edit(newembed);
+            });
+          });
+        });
+      });
     });
-
   }
+  if (command === `${prefix}topText`) {
+    let top = {
+      users: [],
+      points: [],
+      level: [],
+    };
+    con.query(`Select * from globalUserData order by textCredits DESC;`, async (err, rows) => {
+      rows.forEach(element => {
+        top.users.push(element.id);
+        top.points.push(element.textCredits);
+        top.level.push(element.textLevel);
+      });
+ 
+      function clearUsers(input) {
+        let users = "";
+        input.split("\n").forEach(element => {
+          if (element === "<@!undefined>") return;
+          else {
+            users += `${element}\n`;
+          };
+        });
+        return users;
+      };
+ 
+      function clearTotal(input) {
+        let total = "";
+        input.split("\n").forEach(element => {
+          if (element === "undefined") return;
+          else {
+            total += `${element}\n`;
+          };
+        });
+        return total;
+      };
+ 
+      function clearLevel(input) {
+        let level = "";
+        input.split("\n").forEach(element => {
+          if (element === "undefined") return;
+          else {
+            level += `${element}\n`;
+          };
+        });
+        return level;
+      };
+      let number = parseInt(argstop[0], 10);
+      let page = number - 1 || 0;
+      let pages = parseInt(`${top.users.length}`.slice(0, -1), 10);
+      if (page > pages) page = 0;
+      let users = clearUsers(`<@!${top.users[parseInt(`${page}0`,10)]}>\n<@!${top.users[parseInt(`${page}1`,10)]}>\n<@!${top.users[parseInt(`${page}2`,10)]}>\n<@!${top.users[parseInt(`${page}3`,10)]}>\n<@!${top.users[parseInt(`${page}4`,10)]}>\n<@!${top.users[parseInt(`${page}5`,10)]}>\n<@!${top.users[parseInt(`${page}6`,10)]}>\n<@!${top.users[parseInt(`${page}7`,10)]}>\n<@!${top.users[parseInt(`${page}8`,10)]}>\n<@!${top.users[parseInt(`${page}9`,10)]}>`);
+      let total = clearTotal(`${top.points[parseInt(`${page}0`,10)]}\n${top.points[parseInt(`${page}1`,10)]}\n${top.points[parseInt(`${page}2`,10)]}\n${top.points[parseInt(`${page}3`,10)]}\n${top.points[parseInt(`${page}4`,10)]}\n${top.points[parseInt(`${page}5`,10)]}\n${top.points[parseInt(`${page}6`,10)]}\n${top.points[parseInt(`${page}7`,10)]}\n${top.points[parseInt(`${page}8`,10)]}\n${top.points[parseInt(`${page}9`,10)]}`);
+      let level = clearLevel(`${top.level[parseInt(`${page}0`,10)]}\n${top.level[parseInt(`${page}1`,10)]}\n${top.level[parseInt(`${page}2`,10)]}\n${top.level[parseInt(`${page}3`,10)]}\n${top.level[parseInt(`${page}4`,10)]}\n${top.level[parseInt(`${page}5`,10)]}\n${top.level[parseInt(`${page}6`,10)]}\n${top.level[parseInt(`${page}7`,10)]}\n${top.level[parseInt(`${page}8`,10)]}\n${top.level[parseInt(`${page}9`,10)]}`);
+      const topembed = new Discord.RichEmbed()
+        .setAuthor(`Top Text`)
+        .addField(`الشخص`, users, true)
+        .addField(`النقاط`, total, true)
+        .addField(`المستوى`, level, true)
+        .setColor('RANDOM')
+        .setFooter(`Page ${page+1} of ${pages+1}`)
+        .setTimestamp()
+      message.channel.send(topembed).then(async topmessage => {
+        topmessage.react(`◀`).then(() => {
+          topmessage.react(`▶`).then(() => {
+            const backwardsFilter = (reaction, user) => reaction.emoji.name === '◀' && user.id === message.author.id;
+            const forwardsFilter = (reaction, user) => reaction.emoji.name === '▶' && user.id === message.author.id;
+            const backwards = topmessage.createReactionCollector(backwardsFilter, {
+              time: 120000
+            });
+            const forwards = topmessage.createReactionCollector(forwardsFilter, {
+              time: 120000
+            });
+            backwards.on("collect", r => {
+              r.remove(message.author);
+              if (page <= 0) return;
+              page--;
+              let users = clearUsers(`<@!${top.users[parseInt(`${page}0`,10)]}>\n<@!${top.users[parseInt(`${page}1`,10)]}>\n<@!${top.users[parseInt(`${page}2`,10)]}>\n<@!${top.users[parseInt(`${page}3`,10)]}>\n<@!${top.users[parseInt(`${page}4`,10)]}>\n<@!${top.users[parseInt(`${page}5`,10)]}>\n<@!${top.users[parseInt(`${page}6`,10)]}>\n<@!${top.users[parseInt(`${page}7`,10)]}>\n<@!${top.users[parseInt(`${page}8`,10)]}>\n<@!${top.users[parseInt(`${page}9`,10)]}>`);
+              let total = clearTotal(`${top.points[parseInt(`${page}0`,10)]}\n${top.points[parseInt(`${page}1`,10)]}\n${top.points[parseInt(`${page}2`,10)]}\n${top.points[parseInt(`${page}3`,10)]}\n${top.points[parseInt(`${page}4`,10)]}\n${top.points[parseInt(`${page}5`,10)]}\n${top.points[parseInt(`${page}6`,10)]}\n${top.points[parseInt(`${page}7`,10)]}\n${top.points[parseInt(`${page}8`,10)]}\n${top.points[parseInt(`${page}9`,10)]}`);
+              let level = clearLevel(`${top.level[parseInt(`${page}0`,10)]}\n${top.level[parseInt(`${page}1`,10)]}\n${top.level[parseInt(`${page}2`,10)]}\n${top.level[parseInt(`${page}3`,10)]}\n${top.level[parseInt(`${page}4`,10)]}\n${top.level[parseInt(`${page}5`,10)]}\n${top.level[parseInt(`${page}6`,10)]}\n${top.level[parseInt(`${page}7`,10)]}\n${top.level[parseInt(`${page}8`,10)]}\n${top.level[parseInt(`${page}9`,10)]}`);
+              let newembed = new Discord.RichEmbed()
+                .setAuthor(`Top Text`)
+                .addField(`الشخص`, users, true)
+                .addField(`النقاط`, total, true)
+                .addField(`المستوى`, level, true)
+                .setColor("RANDOM")
+                .setFooter(`Page ${page+1} of ${pages+1}`)
+                .setTimestamp()
+              topmessage.edit(newembed);
+            })
+            forwards.on("collect", r => {
+              r.remove(message.author);
+              if (page === pages) return;
+              page++;
+              let users = clearUsers(`<@!${top.users[parseInt(`${page}0`,10)]}>\n<@!${top.users[parseInt(`${page}1`,10)]}>\n<@!${top.users[parseInt(`${page}2`,10)]}>\n<@!${top.users[parseInt(`${page}3`,10)]}>\n<@!${top.users[parseInt(`${page}4`,10)]}>\n<@!${top.users[parseInt(`${page}5`,10)]}>\n<@!${top.users[parseInt(`${page}6`,10)]}>\n<@!${top.users[parseInt(`${page}7`,10)]}>\n<@!${top.users[parseInt(`${page}8`,10)]}>\n<@!${top.users[parseInt(`${page}9`,10)]}>`);
+              let total = clearTotal(`${top.points[parseInt(`${page}0`,10)]}\n${top.points[parseInt(`${page}1`,10)]}\n${top.points[parseInt(`${page}2`,10)]}\n${top.points[parseInt(`${page}3`,10)]}\n${top.points[parseInt(`${page}4`,10)]}\n${top.points[parseInt(`${page}5`,10)]}\n${top.points[parseInt(`${page}6`,10)]}\n${top.points[parseInt(`${page}7`,10)]}\n${top.points[parseInt(`${page}8`,10)]}\n${top.points[parseInt(`${page}9`,10)]}`);
+              let level = clearLevel(`${top.level[parseInt(`${page}0`,10)]}\n${top.level[parseInt(`${page}1`,10)]}\n${top.level[parseInt(`${page}2`,10)]}\n${top.level[parseInt(`${page}3`,10)]}\n${top.level[parseInt(`${page}4`,10)]}\n${top.level[parseInt(`${page}5`,10)]}\n${top.level[parseInt(`${page}6`,10)]}\n${top.level[parseInt(`${page}7`,10)]}\n${top.level[parseInt(`${page}8`,10)]}\n${top.level[parseInt(`${page}9`,10)]}`);
+              let newembed = new Discord.RichEmbed()
+                .setAuthor(`Top Text`)
+                .addField(`الشخص`, users, true)
+                .addField(`النقاط`, total, true)
+                .addField(`المستوى`, level, true)
+                .setColor("RANDOM")
+                .setFooter(`Page ${page+1} of ${pages+1}`)
+                .setTimestamp()
+              topmessage.edit(newembed);
+            });
+          });
+        });
+      });
+    });
+  };
 
-    );
-
-  });
-
-}
-
-);
-
-    })}});
-
-//
 
 client.login(process.env.BOT_TOKEN)

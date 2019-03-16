@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const devs = ['360533020781838346'];
+const toTime = require("to-time")
+const mutes = require("./mutes.json")
 const db = require('quick.db');
 const premium = ['470896018603376640']
 const client = new Discord.Client();   

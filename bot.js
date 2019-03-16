@@ -1,11 +1,8 @@
 const Discord = require('discord.js');
 const devs = ['360533020781838346'];
-const toTime = require("to-time")
-const mutes = require("./mutes.json")
 const db = require('quick.db');
 const premium = ['470896018603376640']
 const client = new Discord.Client();   
-Client.bot = new Discord.Client();   
 const giphy = require('giphy-api')();    
 const googl = require('goo.gl');  
 const translate = require('google-translate-api');   
@@ -1104,6 +1101,8 @@ if (message.content.startsWith(prefix + 'clear')) { //Codes
   }
   }); //Julian
 //mute-time
+const toTime = require("to-time")
+client.mutes = require("./mutes.json")
 
 client.on(`ready`, () => {
     client.user.setStatus("online")

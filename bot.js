@@ -1499,63 +1499,9 @@ var type = [
     
 ];
  
-client.on('message', message => {
-if (!points[message.author.id]) points[message.author.id] = {
-    points: 0,
-  };
-  if(!message.guild) return;
-    let id = message.author.id,prefix="-";
-    if (spee[id] && (new Date).getTime() - spee[id] < 15*1000) {
-        let r = (new Date).getTime() - spee[id];
-        r = 15*1000 - r;
-    return;
-    }
-    if ( message.content == prefix+'quas'){
-       
-        try{
-}catch(e){
- 
-}
- 
-    if(!message.channel.guild) return message.reply('**هذا الأمر للسيرفرات فقط**').then(m => m.delete(3000));
- 
- 
-const item = type[Math.floor(Math.random() * type.length)];
-const filter = response => {  
-    return item.answers.some(answer => answer.toLowerCase() === response.content.toLowerCase());
-};
-message.channel.send('**Game is Start now...!**').then(msg => {
- 
- const embed = new Discord.RichEmbed()
- .setColor("0054dd")
-     .setTitle(`**${item.type}**`)
- .setFooter(`${message.author.tag}`, message.author.avatarURL)
- 
- 
-         
-msg.channel.send(embed).then(() => {
-        message.channel.awaitMessages(filter, { maxMatches: 1, time: 30000, errors: ['time'] })
-        .then((collected) => {
-                  const sh = new Discord.RichEmbed()
-.setColor("04791c")
-.setDescription('**✅ |Good Job +1P**')
-.addField('Type -mypoints', 'To Show ur Points' , true)
-.setFooter(message.author.username, message.author.avatarURL)
-message.channel.sendEmbed(sh);
-            let won = collected.first().author; // في هذا السطر يقوم الكود بسحب الأي دي الذي قام بالأجابة اولاً
-            points[won.id].points++;
-          })
-          .catch(collected => { // في حال لم يقم أحد بالإجابة
-            message.channel.send(`🔚 |**Time Is End**`);
-          })
-          fs.writeFile("./points.json", JSON.stringify(points), (err) => {
-    if (err) console.error(err)
-          })
-        })
-    })
-    spee[id] = (new Date).getTime()
-}
-});
+//soo
+
+//
 client.on('message', message => {
                                 if(!message.channel.guild) return;
                         if (message.content.startsWith('-ping')) {

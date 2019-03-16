@@ -7,6 +7,8 @@ const giphy = require('giphy-api')();
 const googl = require('goo.gl');  
 const translate = require('google-translate-api');   
 const fs = require("fs"); 
+const toTime = require("to-time")
+client.mutes = require("./mutes.json")
 const canvas = require("canvas");
 var antispam = require("anti-spam"); 
 const getYoutubeID = require('get-youtube-id'); 
@@ -1101,9 +1103,6 @@ if (message.content.startsWith(prefix + 'clear')) { //Codes
   }
   }); //Julian
 //mute-time
-const toTime = require("to-time")
-client.mutes = require("./mutes.json")
-
 client.on(`ready`, () => {
     client.user.setStatus("online")
     client.setInterval(() => {

@@ -3669,6 +3669,20 @@ client.on('voiceStateUpdate', (voiceOld, voiceNew) => {
  
     });
 
-//point
+//rd tl8aey
+
+client.on('message', msg => {
+    if (msg.content === 'احبك') {
+      msg.reply('**لاتحتك يا اخوي لو سمحت**');
+    }
+  });
+  
+  
+   client.on('message', msg => {
+    if (msg.content === 'هلا') {
+      msg.reply('**هلا بيك :heart: **');
+    }
+  });
+
 
 client.login(process.env.BOT_TOKEN)

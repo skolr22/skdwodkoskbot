@@ -132,14 +132,8 @@ if (message.content.startsWith(prefix + 'help')) { /// This is The DMS Code Send
      
         ***__Games orders__***
  **       
-『${prefix}rps / حجر ورقة مقص』
-『${prefix}speed / اسرع كتابة』
-『${prefix}quas / اسئلة عامة』
 『${prefix}نكت / نكت 』
-『${prefix}لعبة فكك / فكك』
-『${prefix}عواصم عشوائي/عواصم』
 『${prefix}لعبة كت تويت / كت تويت』
-『${prefix}roll <number> / قرعة』
 『${prefix}فوائد ونصائح  / هل تعلم』
 『${prefix}يعطيك عقابات قاسية / عقاب 』
 『=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.』
